@@ -180,3 +180,24 @@ firstGameContainer.append(fstGameElem);
 const sndGameElem = document.createElement("div");
 sndGameElem.textContent = `${sndGame.name}`;
 secondGameContainer.append(sndGameElem);
+
+
+//Search feature
+const searchbar = document.querySelector("#searchbar");
+searchbar.addEventListener("input", e => {
+    let name = e.target.value.trim().toLowerCase();
+    let matches = GAMES_JSON.filter(x => x.name.toLowerCase().includes(name));
+    if (matches.length == 0) {
+        deleteChildElements(gamesContainer);
+        let notFound = document.createElement("div");
+        notFound.classList.add("not-found");
+        notFound.innerHTML = `
+            <h2>Game Not Found</h2>
+            <p>Sorry...</p>
+        `;
+        gamesContainer.append(notFound);
+    } else {
+        deleteChildElements(gamesContainer);
+        addGamesToPage(matches);
+    }
+});
